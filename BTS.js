@@ -37,7 +37,26 @@ function Tree(array) {
       else return includesHelper(root.leftChild, value);
     }
 
-    return { root, includes }
+    // This function inserts values into the BST
+    function insert(value) {
+        // Check if value already exists then ignore it.
+        if (includes(value)) {
+            console.log("The value already exists in the BST.");
+            return;
+        }
+        return insertHelper(root, value);
+    }
+
+    function insertHelper(root, value) {
+        // Check if root is non-existant then assign value as root
+        if (root === null) return Node(value);
+
+        if (value < root.data) root.leftChild = insertHelper(root.leftChild, value);
+        else root.rightChild = insertHelper(root.rightChild, value);
+
+        return root;
+    }
+    return { root, includes, insert }
 }
 
 
@@ -45,5 +64,7 @@ let currentRoot = Tree([1, 5, 9, 14, 23, 27])
 
 console.log(currentRoot.root);
 console.log(currentRoot.includes(27));
+console.log(currentRoot.insert(30));
+console.log(currentRoot.insert(30));
 // 24158627
 // 
