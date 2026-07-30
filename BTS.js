@@ -56,15 +56,51 @@ function Tree(array) {
 
         return root;
     }
-    return { root, includes, insert }
+
+    // Helper function to get the small value in the right side of the tree
+    function getSuccessor(currentNode) {
+        currentNode = currentNode.rightChild;
+        while (currentNode !== null && currentNode.leftChild !== null) currentNode = currentNode.leftChild;
+        return currentNode;
+    }
+
+    function deleteItem(value) {
+        return deleteItemHelper(root, value);
+    }
+
+    function deleteItemHelper(root , value) {
+        // return null if root is null base case
+        if (root === null) return root;
+
+        // recursive step
+        if (root.data < value) root.rightChild = deleteItemHelper(root.rightChild, value);
+        else if (root.data > value) root.leftChild = deleteItemHelper(root.leftChild, value);
+        else {
+            // If node has zero or one child delete it
+            if (root.rightChild === null) return root.leftChild;
+            if (root.leftChild === null) return root.rightChild;
+
+            // If node has two children find it's successor node
+            // and delete it the original successor 
+            const successor = getSuccessor(root);
+            root.data = successor.data;
+            root.rightChild = deleteItemHelper(root.rightChild, successor.data);
+        }
+        return root;
+    }
+
+    return { root, includes, insert, deleteItem}
 }
 
 
 let currentRoot = Tree([1, 5, 9, 14, 23, 27])
 
-console.log(currentRoot.root);
-console.log(currentRoot.includes(27));
-console.log(currentRoot.insert(30));
-console.log(currentRoot.insert(30));
+// console.log(currentRoot.root);
+// console.log(currentRoot.root);
+// console.log(currentRoot.includes(27));
+// console.log(currentRoot.root);
+// console.log(currentRoot.insert(30));
+// console.log(currentRoot.deleteItem(27));
+// console.log(currentRoot.insert(30));
 // 24158627
 // 
