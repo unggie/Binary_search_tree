@@ -113,19 +113,54 @@ function Tree(array) {
 
     // Recursive Approach
     function levelOrderForEach(callback, queue = root ? [root] : []) {
+        // Check if callback is a function
         if (typeof callback !== "function") {
-            throw new Error("Callback is required as an argument!");
+            throw new Error("Callback is required as a function argument!");
         }
+
         if (queue.length === 0) return;
         const currentNode = queue.shift();
+        // Pass the value of the currentNode to the callback
         callback(currentNode.data);
+        // Add elements to the queue
         if (currentNode.leftChild) queue.push(currentNode.leftChild);
         if (currentNode.rightChild) queue.push(currentNode.rightChild);
-
+        // Recursive step
         levelOrderForEach(callback, queue);
     }
 
-    return { root, includes, insert, deleteItem, levelOrderForEach }
+    function inOrderForEach(callback, currentNode = root) {
+        // Check if callback is a function
+        if (typeof callback !== "function") {
+            throw new Error("Callback is required as a function argument");
+        }
+        if (!currentNode) return;
+        inOrderForEach(callback, currentNode.leftChild);
+        callback(currentNode.data);
+        inOrderForEach(callback, currentNode.rightChild);
+    }
+    function preOrderForEach(callback, currentNode = root) {
+        // Check if callback is a function
+        if (typeof callback !== "function") {
+            throw new Error("Callback is required as a function argument");
+        }
+        if (!currentNode) return;
+        callback(currentNode.data);
+        inOrderForEach(callback, currentNode.leftChild);
+        inOrderForEach(callback, currentNode.rightChild);
+    }
+    function postOrderForEach(callback, currentNode = root) {
+        // Check if callback is a function
+        if (typeof callback !== "function") {
+            throw new Error("Callback is required as a function argument");
+        }
+        if (!currentNode) return;
+        inOrderForEach(callback, currentNode.leftChild);
+        inOrderForEach(callback, currentNode.rightChild);
+        callback(currentNode.data);
+    }
+
+    return { root, includes, insert, deleteItem, levelOrderForEach, inOrderForEach, preOrderForEach, postOrderForEach }
 }
 
 
@@ -138,6 +173,12 @@ console.log(currentRoot.root);
 // console.log(currentRoot.insert(30));
 // console.log(currentRoot.deleteItem(27));
 console.log(currentRoot.insert(30));
-currentRoot.levelOrderForEach((element) => {console.log(element)});
+// currentRoot.levelOrderForEach((element) => {console.log(element)});
+currentRoot.inOrderForEach(element => console.log(element))
+console.log("\n\n");
+currentRoot.preOrderForEach(element => console.log(element))
+console.log("\n\n"); 
+currentRoot.postOrderForEach(element => console.log(element))
+console.log("\n\n"); 
 // 24158627
 // 
