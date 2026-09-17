@@ -89,18 +89,55 @@ function Tree(array) {
         return root;
     }
 
-    return { root, includes, insert, deleteItem}
+    // Iterative approach
+    // function levelOrderForEach(callback) {
+    //     // Check if callback is a function
+    //     if (typeof callback !== "function") {
+    //         throw new Error("Callback is required as an argument!");
+    //     }
+    //     // Check if root isn't null
+    //     if (!root) return;
+    //     // Create a queue
+    //     // ---- Shift(): To remove the first element in the array and move every other element forward by one index
+    //     // ---- Push(): To add new elements at the back of the array
+    //     const queue = [root];
+    //     while (queue.length > 0) {
+    //         const currentNode = queue.shift();
+    //         // Pass value to the callback
+    //         callback(currentNode.data);
+    //         // Add values to queue
+    //         if (currentNode.leftChild) queue.push(currentNode.leftChild);
+    //         if (currentNode.rightChild) queue.push(currentNode.rightChild);
+    //     }
+    // }
+
+    // Recursive Approach
+    function levelOrderForEach(callback, queue = root ? [root] : []) {
+        if (typeof callback !== "function") {
+            throw new Error("Callback is required as an argument!");
+        }
+        if (queue.length === 0) return;
+        const currentNode = queue.shift();
+        callback(currentNode.data);
+        if (currentNode.leftChild) queue.push(currentNode.leftChild);
+        if (currentNode.rightChild) queue.push(currentNode.rightChild);
+
+        levelOrderForEach(callback, queue);
+    }
+
+    return { root, includes, insert, deleteItem, levelOrderForEach }
 }
 
 
 let currentRoot = Tree([1, 5, 9, 14, 23, 27])
 
-// console.log(currentRoot.root);
+console.log(currentRoot.root);
 // console.log(currentRoot.root);
 // console.log(currentRoot.includes(27));
 // console.log(currentRoot.root);
 // console.log(currentRoot.insert(30));
 // console.log(currentRoot.deleteItem(27));
-// console.log(currentRoot.insert(30));
+console.log(currentRoot.insert(30));
+currentRoot.levelOrderForEach((element) => {console.log(element)});
 // 24158627
 // 
