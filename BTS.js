@@ -146,8 +146,8 @@ function Tree(array) {
         }
         if (!currentNode) return;
         callback(currentNode.data);
-        inOrderForEach(callback, currentNode.leftChild);
-        inOrderForEach(callback, currentNode.rightChild);
+        preOrderForEach(callback, currentNode.leftChild);
+        preOrderForEach(callback, currentNode.rightChild);
     }
     function postOrderForEach(callback, currentNode = root) {
         // Check if callback is a function
@@ -155,8 +155,8 @@ function Tree(array) {
             throw new Error("Callback is required as a function argument");
         }
         if (!currentNode) return;
-        inOrderForEach(callback, currentNode.leftChild);
-        inOrderForEach(callback, currentNode.rightChild);
+        postOrderForEach(callback, currentNode.leftChild);
+        postOrderForEach(callback, currentNode.rightChild);
         callback(currentNode.data);
     }
 
@@ -174,11 +174,14 @@ console.log(currentRoot.root);
 // console.log(currentRoot.deleteItem(27));
 console.log(currentRoot.insert(30));
 // currentRoot.levelOrderForEach((element) => {console.log(element)});
+console.log("InOrder Traversal: ");
 currentRoot.inOrderForEach(element => console.log(element))
-console.log("\n\n");
+console.log("\n");
+console.log("preOrder Traversal: ");
 currentRoot.preOrderForEach(element => console.log(element))
-console.log("\n\n"); 
+console.log("\n"); 
+console.log("postOrder Traversal: ");
 currentRoot.postOrderForEach(element => console.log(element))
-console.log("\n\n"); 
+console.log("\n"); 
 // 24158627
 // 
