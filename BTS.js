@@ -160,13 +160,45 @@ function Tree(array) {
         callback(currentNode.data);
     }
 
-    return { root, includes, insert, deleteItem, levelOrderForEach, inOrderForEach, preOrderForEach, postOrderForEach }
+    // Returns the height of a given node
+    function Height(value) {
+        let count = 0;
+        // Find the node containing the value given the node exists
+        const currentNode = NodeSearch(value, root);
+        if (!currentNode) return undefined;
+        else return HeightHelper(currentNode, 0);
+
+    }
+    // This function finds the node
+    function NodeSearch(value, root) {
+        if (!root) return;
+        if (root.data === value) return root;
+        if (value > root.data) return NodeSearch(value, root.rightChild);
+        else return NodeSearch(value, root.leftChild);
+    }
+    // This function find the height
+    function HeightHelper(currentNode, count) {
+        if (!currentNode) return;
+        if (!currentNode.leftChild && !currentNode.rightChild ) {
+            return count;
+        }
+        const leftSubTree = currentNode.leftChild 
+            ? HeightHelper(currentNode.leftChild, count + 1) 
+            : count;
+        const rightSubTree = currentNode.rightChild 
+            ? HeightHelper(currentNode.rightChild, count + 1) 
+            : count;
+        if (leftSubTree > rightSubTree) return leftSubTree;
+        else return rightSubTree;
+    }
+
+    return { root, includes, insert, deleteItem, levelOrderForEach, inOrderForEach, preOrderForEach, postOrderForEach, Height }
 }
 
 
 let currentRoot = Tree([1, 5, 9, 14, 23, 27])
 
-console.log(currentRoot.root);
+// console.log(currentRoot.root);
 // console.log(currentRoot.root);
 // console.log(currentRoot.includes(27));
 // console.log(currentRoot.root);
@@ -174,14 +206,13 @@ console.log(currentRoot.root);
 // console.log(currentRoot.deleteItem(27));
 console.log(currentRoot.insert(30));
 // currentRoot.levelOrderForEach((element) => {console.log(element)});
-console.log("InOrder Traversal: ");
-currentRoot.inOrderForEach(element => console.log(element))
-console.log("\n");
-console.log("preOrder Traversal: ");
-currentRoot.preOrderForEach(element => console.log(element))
-console.log("\n"); 
-console.log("postOrder Traversal: ");
-currentRoot.postOrderForEach(element => console.log(element))
-console.log("\n"); 
-// 24158627
-// 
+// console.log("InOrder Traversal: ");
+// currentRoot.inOrderForEach(element => console.log(element))
+// console.log("\n");
+// console.log("preOrder Traversal: ");
+// currentRoot.preOrderForEach(element => console.log(element))
+// console.log("\n"); 
+// console.log("postOrder Traversal: ");
+// currentRoot.postOrderForEach(element => console.log(element))
+// console.log("\n"); 
+console.log(currentRoot.Height(9));
