@@ -161,38 +161,49 @@ function Tree(array) {
     }
 
     // Returns the height of a given node
-    function Height(value) {
+    function height(value) {
         let count = 0;
         // Find the node containing the value given the node exists
-        const currentNode = NodeSearch(value, root);
+        const currentNode = nodeSearch(value, root);
         if (!currentNode) return undefined;
-        else return HeightHelper(currentNode, 0);
+        else return heightHelper(currentNode, 0);
 
     }
     // This function finds the node
-    function NodeSearch(value, root) {
+    function nodeSearch(value, root) {
         if (!root) return;
         if (root.data === value) return root;
-        if (value > root.data) return NodeSearch(value, root.rightChild);
-        else return NodeSearch(value, root.leftChild);
+        if (value > root.data) return nodeSearch(value, root.rightChild);
+        else return nodeSearch(value, root.leftChild);
     }
     // This function find the height
-    function HeightHelper(currentNode, count) {
+    function heightHelper(currentNode, count) {
         if (!currentNode) return;
         if (!currentNode.leftChild && !currentNode.rightChild ) {
             return count;
         }
         const leftSubTree = currentNode.leftChild 
-            ? HeightHelper(currentNode.leftChild, count + 1) 
+            ? heightHelper(currentNode.leftChild, count + 1) 
             : count;
         const rightSubTree = currentNode.rightChild 
-            ? HeightHelper(currentNode.rightChild, count + 1) 
+            ? heightHelper(currentNode.rightChild, count + 1) 
             : count;
         if (leftSubTree > rightSubTree) return leftSubTree;
         else return rightSubTree;
     }
 
-    return { root, includes, insert, deleteItem, levelOrderForEach, inOrderForEach, preOrderForEach, postOrderForEach, Height }
+    function depth(value) {
+        return depthHelper(value, root, 0); 
+    }
+    function depthHelper(value, root, count) {
+        if (!root) return;
+        if (root.data === value) {
+            return count;
+        }
+        if (value > root.data) return depthHelper(value, root.rightChild, count + 1);
+        else return depthHelper(value, root.leftChild, count + 1);
+    }
+    return { root, includes, insert, deleteItem, levelOrderForEach, inOrderForEach, preOrderForEach, postOrderForEach, height, depth }
 }
 
 
@@ -215,4 +226,7 @@ console.log(currentRoot.insert(30));
 // console.log("postOrder Traversal: ");
 // currentRoot.postOrderForEach(element => console.log(element))
 // console.log("\n"); 
-console.log(currentRoot.Height(9));
+console.log(currentRoot.height(9));
+console.log(currentRoot.depth(9));
+console.log(currentRoot.depth(27));
+console.log(currentRoot.depth(30));
