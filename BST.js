@@ -3,7 +3,16 @@ function Node(data, leftChild = null, rightChild = null) {
 }
 
 function Tree(array) {
-    let root = buildTree(array, 0, array.length - 1);
+    function arrayClean(array) {
+        const resultArray = array.sort((a, b) => { return a - b });
+        const finalArray = [];
+        for (let i = 1; i <= array.length; i++) {
+            if (array[i-1] !== array[i]) finalArray.push(array[i - 1]);
+        }
+        return finalArray;
+    }
+    const treeArray = arrayClean(array);
+    let root = buildTree(treeArray, 0, array.length - 1);
     function buildTree(array, start, end) {
         if (start > end) return null;
 
@@ -176,7 +185,7 @@ function Tree(array) {
         if (value > root.data) return nodeSearch(value, root.rightChild);
         else return nodeSearch(value, root.leftChild);
     }
-    // This function find the height
+    // This function finds the height
     function heightHelper(currentNode, count) {
         if (!currentNode) return;
         if (!currentNode.leftChild && !currentNode.rightChild ) {
@@ -203,19 +212,67 @@ function Tree(array) {
         if (value > root.data) return depthHelper(value, root.rightChild, count + 1);
         else return depthHelper(value, root.leftChild, count + 1);
     }
-    return { root, includes, insert, deleteItem, levelOrderForEach, inOrderForEach, preOrderForEach, postOrderForEach, height, depth }
+    function isBalanced() {
+        return isBalancedHelper(root) !== false;
+    }
+    function isBalancedHelper(root) {
+        if (!root) return -1;
+
+        // Ask left subtree for height
+        const leftSubTree = isBalancedHelper(root.leftChild);
+        if (leftSubTree === false) return false;
+
+        const rightSubTree = isBalancedHelper(root.rightChild);
+        if (rightSubTree === false) return false;
+
+        if (Math.abs(leftSubTree - rightSubTree) > 1) return false;
+
+        return Math.max(leftSubTree, rightSubTree) + 1;
+
+    }
+
+    function rebalance() {
+        const newArray = [];
+        inOrderForEach(element => {
+            if (!element);
+            newArray.push(element);
+        });
+        const newRoot = buildTree(newArray, 0, newArray.length - 1);
+        root = newRoot;
+    }
+
+    function getRoot() {
+        return root;
+    }
+
+    return { 
+        root, 
+        getRoot,
+        includes, 
+        insert, 
+        deleteItem, 
+        levelOrderForEach, 
+        inOrderForEach, 
+        preOrderForEach, 
+        postOrderForEach, 
+        height, 
+        depth,
+        isBalanced,
+        rebalance 
+    }
 }
 
 
 let currentRoot = Tree([1, 5, 9, 14, 23, 27])
 
-// console.log(currentRoot.root);
-// console.log(currentRoot.root);
+console.log(currentRoot.root);
 // console.log(currentRoot.includes(27));
 // console.log(currentRoot.root);
-// console.log(currentRoot.insert(30));
-// console.log(currentRoot.deleteItem(27));
 console.log(currentRoot.insert(30));
+// console.log(currentRoot.deleteItem(27));
+console.log(currentRoot.insert(30)); 
+console.log(currentRoot.insert(40));
+console.log(currentRoot.insert(50));
 // currentRoot.levelOrderForEach((element) => {console.log(element)});
 // console.log("InOrder Traversal: ");
 // currentRoot.inOrderForEach(element => console.log(element))
@@ -226,7 +283,11 @@ console.log(currentRoot.insert(30));
 // console.log("postOrder Traversal: ");
 // currentRoot.postOrderForEach(element => console.log(element))
 // console.log("\n"); 
-console.log(currentRoot.height(9));
-console.log(currentRoot.depth(9));
-console.log(currentRoot.depth(27));
-console.log(currentRoot.depth(30));
+// console.log(currentRoot.height(9));
+// console.log(currentRoot.depth(9));
+// console.log(currentRoot.depth(27));
+// console.log(currentRoot.depth(30));
+console.log(currentRoot.isBalanced());
+console.log(currentRoot.rebalance());
+console.log(currentRoot.isBalanced());
+console.log(currentRoot.getRoot());
