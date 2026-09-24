@@ -2,7 +2,7 @@ function Node(data, leftChild = null, rightChild = null) {
     return { data, leftChild, rightChild }
 }
 
-function Tree(array) {
+export function Tree(array) {
     function arrayClean(array) {
         const resultArray = array.sort((a, b) => { return a - b });
         const finalArray = [];
@@ -12,7 +12,7 @@ function Tree(array) {
         return finalArray;
     }
     const treeArray = arrayClean(array);
-    let root = buildTree(treeArray, 0, array.length - 1);
+    let root = buildTree(treeArray, 0, treeArray.length - 1);
     function buildTree(array, start, end) {
         if (start > end) return null;
 
@@ -263,31 +263,33 @@ function Tree(array) {
 }
 
 
-let currentRoot = Tree([1, 5, 9, 14, 23, 27])
+// let currentRoot = Tree([1, 5, 9, 14, 23, 27])
 
-console.log(currentRoot.root);
-// console.log(currentRoot.includes(27));
 // console.log(currentRoot.root);
-console.log(currentRoot.insert(30));
-// console.log(currentRoot.deleteItem(27));
-console.log(currentRoot.insert(30)); 
-console.log(currentRoot.insert(40));
-console.log(currentRoot.insert(50));
-// currentRoot.levelOrderForEach((element) => {console.log(element)});
-// console.log("InOrder Traversal: ");
-// currentRoot.inOrderForEach(element => console.log(element))
-// console.log("\n");
-// console.log("preOrder Traversal: ");
-// currentRoot.preOrderForEach(element => console.log(element))
-// console.log("\n"); 
-// console.log("postOrder Traversal: ");
-// currentRoot.postOrderForEach(element => console.log(element))
-// console.log("\n"); 
-// console.log(currentRoot.height(9));
-// console.log(currentRoot.depth(9));
-// console.log(currentRoot.depth(27));
-// console.log(currentRoot.depth(30));
-console.log(currentRoot.isBalanced());
-console.log(currentRoot.rebalance());
-console.log(currentRoot.isBalanced());
-console.log(currentRoot.getRoot());
+// // console.log(currentRoot.includes(27));
+// // console.log(currentRoot.root);
+// console.log(currentRoot.insert(30));
+// // console.log(currentRoot.deleteItem(27));
+// console.log(currentRoot.insert(30)); 
+// console.log(currentRoot.insert(40));
+// console.log(currentRoot.insert(50));
+// // currentRoot.levelOrderForEach((element) => {console.log(element)});
+// // console.log("InOrder Traversal: ");
+// // currentRoot.inOrderForEach(element => console.log(element))
+// // console.log("\n");
+// // console.log("preOrder Traversal: ");
+// // currentRoot.preOrderForEach(element => console.log(element))
+// // console.log("\n"); 
+// // console.log("postOrder Traversal: ");
+// // currentRoot.postOrderForEach(element => console.log(element))
+// // console.log("\n"); 
+// // console.log(currentRoot.height(9));
+// // console.log(currentRoot.depth(9));
+// // console.log(currentRoot.depth(27));
+// // console.log(currentRoot.depth(30));
+// console.log(currentRoot.isBalanced());
+// console.log(currentRoot.rebalance());
+// console.log(currentRoot.isBalanced());
+// console.log(currentRoot.getRoot());
+
+

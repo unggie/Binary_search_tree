@@ -16,5 +16,6 @@
   "bugs": {
     "url": "https://github.com/unggie/Binary_search_tree/issues"
   },
-  "homepage": "https://github.com/unggie/Binary_search_tree#readme"
+  "homepage": "https://github.com/unggie/Binary_search_tree#readme",
+  "type": "module"
 }
